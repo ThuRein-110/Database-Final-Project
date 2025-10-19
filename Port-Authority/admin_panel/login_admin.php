@@ -1,7 +1,8 @@
 <?php
 session_start();
-include("../database.php");
-
+include("../../database.php");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);

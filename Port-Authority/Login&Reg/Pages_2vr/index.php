@@ -1,31 +1,22 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["user"])){
-    header("Location: ../login.php"); // adjust if needed
-    exit;
-}
-
-// Correct path to database.php
-$databasePath = __DIR__ . "/../../database.php";
-
-if(!file_exists($databasePath)){
-    die("Database file not found at: $databasePath");
-}
-
-require_once $databasePath;
-
-
-
-session_start();
-include "../../database.php";
-
-if (!isset($_SESSION['user'])) {
+// Check if user is logged in
+if (!isset($_SESSION["user"])) {
     header("Location: ../login.php");
     exit();
 }
 
+// Correct path to database
+$databasePath = __DIR__ . "/../../../database.php";
+if (!file_exists($databasePath)) {
+    die("Database file not found at: $databasePath");
+}
+require_once $databasePath;
+
 $message = "";
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = $_POST['full_name'];
     $passport_number = $_POST['passport_number'];
@@ -35,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Insert record using prepared statement
     $stmt = $conn->prepare("INSERT INTO visa_applications (full_name, passport_number, visa_type, status) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $full_name, $passport_number, $visa_type, $status);
+
     if ($stmt->execute()) {
         $message = "Visa application added successfully!";
     } else {
@@ -42,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION["user"])){
-    header ("Location:../welcome.php");
+    header ("Location:login.php");
 } 
 ?>
 <!DOCTYPE html>
@@ -45,7 +45,7 @@ if(isset($_SESSION["user"])){
             if ($password !== $repeat_password) {
                 $errors[] = "Password does not match";
             }
-            require_once "./../database.php";
+            require_once "../../database.php";
 
             $sql = "SELECT * FROM users WHERE email='$email'";
             $result = mysqli_query($conn,$sql);

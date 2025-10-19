@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(isset($_SESSION["user"])){
-    header ("Location: ./Pages_2vr/index.php");
+    header ("Location: Pages_2vr/index.php");
+    exit();
 } 
 ?>
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ if(isset($_SESSION["user"])){
         if(isset($_POST["login"])){
             $email = $_POST["email"];
             $password = $_POST["password"];
-            require_once "../database.php";
+            require_once "../../database.php";
             $sql = "SELECT * FROM users WHERE email ='$email'";
             $result = mysqli_query($conn, $sql);
             $user = mysqli_fetch_array($result, MYSQLI_ASSOC);

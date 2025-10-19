@@ -21,7 +21,7 @@ It allows:
 ---
 
 ## 📁 Project Structure
-| 🗂️ **Project Folder Structure** | ![Project Folder Structure](filepath.png)
+ ![Project Folder Structure](filepath.png)
 
 ## 🧩 Features
 

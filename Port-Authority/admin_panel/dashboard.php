@@ -13,7 +13,6 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search = $_GET['search'];
     $searchParam = "%$search%";
 
-    // Table query
     $stmt = $conn->prepare("SELECT * FROM visa_applications WHERE full_name LIKE ? OR passport_number LIKE ? OR visa_type LIKE ? OR status LIKE ?");
     $stmt->bind_param("ssss", $searchParam, $searchParam, $searchParam, $searchParam);
     $stmt->execute();
@@ -49,7 +48,6 @@ while ($row = $status_result->fetch_assoc()) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,24 +56,18 @@ while ($row = $status_result->fetch_assoc()) {
     <title>Visa Dashboard</title>
     <link rel="stylesheet" href="dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 <body>
 <div class="container">
     <h1>Visa Application Dashboard</h1>
 
-    <!-- Search Form -->
     <form method="GET" class="search-bar">
         <input type="text" name="search" placeholder="Search by name, passport, visa type or status" value="<?= htmlspecialchars($search) ?>">
         <button type="submit">Search</button>
         <a href="dashboard.php" class="reset">Reset</a>
-        <a href="login_admin.php" class="reset_logout">Logouts</a>
+        <a href="login_admin.php" class="reset_logout">Logout</a>
     </form>
-
-    <!-- Add Button -->
-    <!-- <a href="add_visa.php" class="add-btn">+ Add New Application</a> -->
-
-    <!-- Visa Table -->
+<div class="table-responsive">
     <table>
         <tr>
             <th>ID</th>
@@ -85,6 +77,7 @@ while ($row = $status_result->fetch_assoc()) {
             <th>Status</th>
             <th>Action</th>
         </tr>
+
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
                 <tr>
@@ -94,6 +87,13 @@ while ($row = $status_result->fetch_assoc()) {
                     <td><?= htmlspecialchars($row['visa_type']) ?></td>
                     <td><?= htmlspecialchars($row['status']) ?></td>
                     <td>
+                        <?php if ($row['status'] === 'Pending'): ?>
+                            <a href="approve_visa.php?id=<?= $row['id'] ?>&status=Approved" class="approve-btn" onclick="return confirm('Approve this application?')">Approve</a>
+                            <a href="approve_visa.php?id=<?= $row['id'] ?>&status=Rejected" class="reject-btn" onclick="return confirm('Reject this application?')">Reject</a>
+                        <?php else: ?>
+                            <span class="status-label"><?= htmlspecialchars($row['status']) ?></span>
+                        <?php endif; ?>
+
                         <a href="edit_visa.php?id=<?= $row['id'] ?>" class="edit-btn">Edit</a>
                         <a href="delete_visa.php?id=<?= $row['id'] ?>" class="delete-btn" onclick="return confirm('Delete this record?')">Delete</a>
                     </td>
@@ -104,69 +104,78 @@ while ($row = $status_result->fetch_assoc()) {
         <?php endif; ?>
     </table>
 </div>
-<div class="chart-card">
-    <div class="chart-left">
-        <canvas id="pieChart"></canvas>
-    </div>
-
-    <div class="chart-center">
-        <h3>Chart Summary</h3>
-        <p>This pie chart shows the distribution of visa statuses. The column chart shows the total per visa type.</p>
-    </div>
-
-    <div class="chart-right">
-        <canvas id="barChart"></canvas>
-    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="chart-card">
+    <div class="chart-left"><canvas id="pieChart"></canvas></div>
+    <div class="chart-center">
+        <h3>Chart Summary</h3>
+        <p>This pie chart shows the distribution of visa types. The bar chart shows totals per status.</p>
+    </div>
+    <div class="chart-right"><canvas id="barChart"></canvas></div>
+</div>
+
 <script>
-    // Pie chart: Visa types
+    // Pie chart
     const pieCtx = document.getElementById('pieChart').getContext('2d');
-    const pieChart = new Chart(pieCtx, {
+    new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: <?php echo json_encode($visa_labels); ?>,
+            labels: <?= json_encode($visa_labels); ?>,
             datasets: [{
                 label: 'Visa Type Distribution',
-                data: <?php echo json_encode($visa_totals); ?>,
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
-                    '#9966FF', '#FF9F40', '#C9CBCF', '#FF6B6B',
-                    '#6BCB77', '#FFD93D', '#6A4C93', '#00A6A6',
-                    '#FF7F50', '#A52A2A', '#008000', '#800080'
-                ],
-                borderColor: '#fff',
-                borderWidth: 2
+                data: <?= json_encode($visa_totals); ?>,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#6BCB77', '#FFD93D']
             }]
         },
         options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
     });
 
-    // Column chart: Status counts
+    // Bar chart
     const barCtx = document.getElementById('barChart').getContext('2d');
-    const barChart = new Chart(barCtx, {
+    new Chart(barCtx, {
         type: 'bar',
         data: {
-            labels: <?php echo json_encode($status_labels); ?>,
+            labels: <?= json_encode($status_labels); ?>,
             datasets: [{
-                label: 'Total Applications',
-                data: <?php echo json_encode($status_totals); ?>,
-                backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                borderColor: '#fff',
-                borderWidth: 1
+                label: 'Applications',
+                data: <?= json_encode($status_totals); ?>,
+                backgroundColor: 'rgba(54,162,235,0.8)'
             }]
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { display: false },
-                title: { display: true, text: 'Applications per Status' }
-            },
             scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
         }
     });
 </script>
+
+<style>
+/* Button styling */
+.approve-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.reject-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.approve-btn:hover, .reject-btn:hover { opacity: 0.9; }
+
+.status-label {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #6c757d;
+    color: #fff;
+    font-weight: bold;
+}
+</style>
 
 </body>
 </html>

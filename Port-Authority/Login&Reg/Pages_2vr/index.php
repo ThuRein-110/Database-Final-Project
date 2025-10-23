@@ -1,15 +1,13 @@
 <?php
 session_start();
-<?php
-session_start();
 
-// Check if user is logged in
+// Check login
 if (!isset($_SESSION["user"])) {
     header("Location: ../login.php");
     exit();
 }
 
-// Correct path to database
+// Database connection
 $databasePath = __DIR__ . "/../../../database.php";
 if (!file_exists($databasePath)) {
     die("Database file not found at: $databasePath");
@@ -18,24 +16,64 @@ require_once $databasePath;
 
 $message = "";
 
+// Debug connection
+if (!$conn) {
+    die("❌ Database connection failed: " . mysqli_connect_error());
+}
 
-
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = $_POST['full_name'];
     $passport_number = $_POST['passport_number'];
     $visa_type = $_POST['visa_type'];
     $status = $_POST['status'];
 
-    // Insert record using prepared statement
-    $stmt = $conn->prepare("INSERT INTO visa_applications (full_name, passport_number, visa_type, status) VALUES (?, ?, ?, ?)");
+    // Insert into visa_applications
+    $query = "INSERT INTO visa_applications (full_name, passport_number, visa_type, status) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($query);
+
+    if (!$stmt) {
+        die("❌ Prepare failed: " . $conn->error . "<br>Query: " . $query);
+    }
+
     $stmt->bind_param("ssss", $full_name, $passport_number, $visa_type, $status);
 
     if ($stmt->execute()) {
-        $message = "Visa application added successfully!";
-    } else {
-        $message = "Error: " . $conn->error;
-    }
+        $visa_id = $conn->insert_id;
+
+        
+        // 🟡 Handle document upload
+        if (isset($_FILES['document_file']) && $_FILES['document_file']['error'] === UPLOAD_ERR_OK) {
+            $fileTmp = $_FILES['document_file']['tmp_name'];
+            $fileName = basename($_FILES['document_file']['name']);
+            $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+
+            // Create subfolder uploads/PASSPORT_FULLNAME/
+            $safeFolder = preg_replace('/[^A-Za-z0-9_\-]/', '_', $passport_number . "_" . $full_name);
+            $uploadDir = __DIR__ . "/uploads/" . $safeFolder . "/";
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            $newFileName = uniqid() . "_" . $fileName;
+            $uploadPath = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($fileTmp, $uploadPath)) {
+                $stmt2 = $conn->prepare("INSERT INTO document (visa_id, document_name) VALUES (?, ?)");
+                if ($stmt2) {
+                    $stmt2->bind_param("is", $visa_id, $newFileName);
+                    $stmt2->execute();
+                } else {
+                    die("❌ Document insert failed: " . $conn->error);
+                }
+            } else {
+                die("❌ File move failed.");
+            }
+        }
+
+        header("Location: index.php?success=1");
+        exit();
+    } 
 }
 ?>
 
@@ -259,44 +297,53 @@ https://templatemo.com/tm-597-neural-glass
         </div>
     </section>
 
-    <!-- Section 5: Contact -->
-    <section class="" id="contact">
-        <div class="container">
-            <h1>Visa Application Form</h1>
-            <?php if($message) echo "<p style='text-align:center;color:green;'>$message</p>"; ?>
-            <form method="POST" class="form">
-                <label>Full Name</label>
-                <input type="text" name="full_name" required>
-                <label>Passport Number</label>
-                <input type="text" name="passport_number" required>
-                <label>Visa Type</label>
-                <select name="visa_type" required>
-                    <option value="Tourist_visa">Tourist Visa (TR)</option>
-                    <option value="Free_entry">Free Entry</option>
-                    <option value="transit">Visa On Transit</option>
-                    <option value="business">Business Visa (BR)</option>
-                    <option value="student">Student Visa (SR)</option>
-                    <option value="work">Work Visa (WR)</option>
-                    <option value="diplomatic">Diplomatic Visa (DR)</option>
-                    <option value="official">Official Visa (OR)</option>
-                    <option value="medical">Medical Visa (MR)</option>
-                    <option value="journalist">Journalist Visa (JR)</option>
-                    <option value="research">Research Visa (RR)</option>
-                    <option value="cultural">Cultural Visa (CR)</option>
-                    <option value="family">Family Visa (FR)</option>
-                    <option value="retirement">Retirement Visa</option>
-                    <option value="permanent">Permanent Resident Visa (PR)</option>
-                    <option value="nonImmigrant">Non-Immigrant Visa (NR)</option>
-                </select>
-                <label>Status</label>
-                <select name="status" required>
-                    <option value="Pending">Pending</option>
-                </select>
-                <button type="submit">Add Application</button>
-                <a href="index.php" class="back-btn">Back</a>
-            </form>
-        </div>
-    </section>
+   <!-- Section 5: Contact -->
+<section id="contact">
+  <div class="container">
+    <h1>Visa Application Form</h1>
+    <?php if ($message) echo "<p style='text-align:center;color:green;'>$message</p>"; ?>
+    <form method="POST" enctype="multipart/form-data" class="form">
+      <label>Full Name</label>
+      <input type="text" name="full_name" required>
+
+      <label>Passport Number</label>
+      <input type="text" name="passport_number" required>
+
+      <label>Visa Type</label>
+      <select name="visa_type" required>
+        <option value="Tourist_visa">Tourist Visa (TR)</option>
+        <option value="Free_entry">Free Entry</option>
+        <option value="transit">Visa On Transit</option>
+        <option value="business">Business Visa (BR)</option>
+        <option value="student">Student Visa (SR)</option>
+        <option value="work">Work Visa (WR)</option>
+        <option value="diplomatic">Diplomatic Visa (DR)</option>
+        <option value="official">Official Visa (OR)</option>
+        <option value="medical">Medical Visa (MR)</option>
+        <option value="journalist">Journalist Visa (JR)</option>
+        <option value="research">Research Visa (RR)</option>
+        <option value="cultural">Cultural Visa (CR)</option>
+        <option value="family">Family Visa (FR)</option>
+        <option value="retirement">Retirement Visa</option>
+        <option value="permanent">Permanent Resident Visa (PR)</option>
+        <option value="nonImmigrant">Non-Immigrant Visa (NR)</option>
+      </select>
+
+      <label>Status</label>
+      <select name="status" required>
+        <option value="Pending">Pending</option>
+      </select>
+
+      <!-- 📎 Upload Document -->
+      <label>Upload Document (PDF or Image)</label>
+      <input type="file" name="document_file" accept=".pdf,.jpg,.jpeg,.png" required>
+
+      <button type="submit" name="submit">Add Application</button>
+      <a href="index.php" class="back-btn">Back</a>
+    </form>
+  </div>
+</section>
+
 
     <!-- Footer -->
     <footer>

@@ -35,7 +35,7 @@ if(isset($_SESSION["user"])){
             if($user){
                 if(password_verify($password, $user["password"])){
                     session_start();
-                    $_SESSION["user"] = "yes";
+                    $_SESSION["user"] = $user["email"];
                     header("Location: ./Pages_2vr/index.php");
                     die();
                 } else{

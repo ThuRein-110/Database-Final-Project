@@ -310,14 +310,6 @@ https://templatemo.com/tm-597-neural-glass
                 <a href="#">Documentation</a>
                 <a href="https://github.com/yourproject" target="_blank" rel="noopener">Support</a>
             </div>
-            <div class="footer-copyright">
-                <p>&copy; 2025 Immigration Portal. All rights reserved.</p>
-            </div>
-            <div class="footer-design">
-                Design: <a href="https://templatemo.com" target="_blank" rel="nofollow noopener">TemplateMo</a> | 
-                Enhanced by Immigration Systems | 
-                <a href="#">Government Framework</a>
-            </div>
         </div>
     </footer>
     <script src="templatemo-neural-scripts.js"></script>

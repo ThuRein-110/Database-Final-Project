@@ -150,9 +150,7 @@ https://templatemo.com/tm-597-neural-glass
         setInterval(createQuantumParticle, 1500);
 
         // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+        
         };
 
         const observer = new IntersectionObserver(entries => {

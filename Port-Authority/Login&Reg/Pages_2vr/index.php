@@ -1,5 +1,7 @@
 <?php
 session_start();
+<?php
+session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION["user"])) {
@@ -15,6 +17,8 @@ if (!file_exists($databasePath)) {
 require_once $databasePath;
 
 $message = "";
+
+
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -48,8 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="templatemo-neural-style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-
-
 
 <!--
 
@@ -88,9 +90,9 @@ https://templatemo.com/tm-597-neural-glass
                 <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#e0a3ff"/>
-                            <stop offset="50%" style="stop-color:#ff69b4"/>
-                            <stop offset="100%" style="stop-color:#9370db"/>
+                            <stop offset="0%" style="stop-color:#1e3c72"/>
+                            <stop offset="50%" style="stop-color:#1e3c72"/>
+                            <stop offset="100%" style="stop-color:#1e3c72"/>
                         </linearGradient>
                     </defs>
                     <circle cx="50" cy="30" r="8" fill="url(#logoGradient)" opacity="0.8">
@@ -112,15 +114,14 @@ https://templatemo.com/tm-597-neural-glass
                         <animate attributeName="opacity" values="0.6;1;0.6" dur="2.8s" repeatCount="indefinite"/>
                     </line>
                 </svg>
-                Immegration
+                Immigration
             </a>
             <ul class="nav-links">
-                <li><a href="#features">Home</a></li>
-                <li><a href="#showcase">Announancement</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#showcase">Announcement</a></li>
                 <li><a href="#timeline">Documentation</a></li>
-                <li><a href="#contact" >Visa Application</a></li>
-                <li><a href="../logout.php">Logouts</a></li>
-</ul>
+                <li><a href="#contact">Visa Application</a></li>
+                <li><a href="../logout.php">Logout</a></li>
             </ul>
             <div class="mobile-menu-toggle">
                 <div class="hamburger-line"></div>
@@ -129,24 +130,24 @@ https://templatemo.com/tm-597-neural-glass
             </div>
         </nav>
         <div class="mobile-nav">
-            <a href="#features">Home</a>
-            <a href="#showcase">Announancement</a>
+            <a href="#home">Home</a>
+            <a href="#showcase">Announcement</a>
             <a href="#timeline">Documentation</a>
             <a href="#contact">Visa Application</a>
-           <a href="../logout.php">Logouts</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
     <!-- Section 1: Hero -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <div class="hero-subtitle">Welcome to the Immegration</div>
+            <div class="hero-subtitle">Welcome to the Immigration</div>
             <h1>Online Booking Is Available Now</h1>
             
             <div class="hero-description">
                 <p>
-                    I don't know what to write here. Please help me to write something.
-            </p>
+                    Streamline your immigration process with our advanced online system. Fast, secure, and convenient visa applications and services.
+                </p>
             </div>
 
             <div class="hero-stats">
@@ -156,7 +157,7 @@ https://templatemo.com/tm-597-neural-glass
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat-number">TM30</span>
-                    <span class="hero-stat-label"> Online</span>
+                    <span class="hero-stat-label">Online</span>
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat-number">Online</span>
@@ -164,139 +165,94 @@ https://templatemo.com/tm-597-neural-glass
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat-number">24/7</span>
-                    <span class="hero-stat-label">Neural Access</span>
+                    <span class="hero-stat-label">Online Access</span>
                 </div>
             </div>
             
             <div class="cta-buttons">
                 <a href="#features" class="cta-button">Home</a>
-                <a href="#showcase" class="cta-button secondary">Explore Announancement</a>
+                <a href="#showcase" class="cta-button secondary">Explore Announcement</a>
             </div>
         </div>
     </section>
+	
+	            <!-- Added Image under CTA buttons -->
+            <div style="margin-top: 3rem; text-align: center;">
+                <img src="images/Thai1.jpg" 
+                     alt="Immigration Services" 
+                     style="max-width: 600px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            </div>
 
     <!-- Section 2: Diagonal Features -->
-    <section class="features" id="features">
-        <div class="features-container">
-            <h2 class="section-title">QUANTUM CAPABILITIES</h2>
-            <div class="diagonal-grid">
-                <div class="feature-row">
-                    <div class="feature-content glass">
-                        <div class="feature-icon">🧠</div>
-                        <h3>Neural Processing</h3>
-                        <p>Advanced AI-driven interfaces that adapt to your consciousness patterns, creating personalized digital experiences that evolve with your neural pathways.</p>
-                    </div>
-                    <div class="feature-visual glass"></div>
-                </div>
-                
-                <div class="feature-row">
-                    <div class="feature-content glass">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Quantum Speed</h3>
-                        <p>Instantaneous data processing through quantum tunneling algorithms, delivering response times that exist outside conventional spacetime constraints.</p>
-                    </div>
-                    <div class="feature-visual glass"></div>
-                </div>
-                
-                <div class="feature-row">
-                    <div class="feature-content glass">
-                        <div class="feature-icon">🌐</div>
-                        <h3>Dimensional Sync</h3>
-                        <p>Seamless synchronization across multiple reality layers, ensuring your digital presence remains consistent throughout parallel dimensions.</p>
-                    </div>
-                    <div class="feature-visual glass"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+	 
 
     <!-- Section 3: Hexagonal Showcase -->
     <section class="showcase" id="showcase">
-        <h2 class="section-title">MATRIX PROTOCOLS</h2>
+        <h2 class="section-title">IMMIGRATION SERVICES</h2>
         <div class="hexagon-container">
             <div class="hexagon">
                 <div class="hexagon-inner glass">
-                    <div class="hexagon-icon">🔮</div>
-                    <h4>Holographic UI</h4>
-                    <p>3D interfaces projected into reality space</p>
+                    
+                    <h4>Visa Types</h4>
+                    <p>Various visa categories available</p>
                 </div>
             </div>
             <div class="hexagon">
                 <div class="hexagon-inner glass">
-                    <div class="hexagon-icon">🛡️</div>
-                    <h4>Quantum Security</h4>
-                    <p>Unbreakable encryption protocols</p>
+                    
+                    <h4>Security</h4>
+                    <p>Secure application processing</p>
                 </div>
             </div>
             <div class="hexagon">
                 <div class="hexagon-inner glass">
-                    <div class="hexagon-icon">🚀</div>
-                    <h4>Warp Navigation</h4>
-                    <p>Instant travel between data nodes</p>
-                </div>
-            </div>
-            <div class="hexagon">
-                <div class="hexagon-inner glass">
-                    <div class="hexagon-icon">💎</div>
-                    <h4>Crystal Storage</h4>
-                    <p>Infinite capacity data crystals</p>
-                </div>
-            </div>
-            <div class="hexagon">
-                <div class="hexagon-inner glass">
-                    <div class="hexagon-icon">🎯</div>
-                    <h4>Neural Targeting</h4>
-                    <p>Thought-based interaction systems</p>
-                </div>
-            </div>
-            <div class="hexagon">
-                <div class="hexagon-inner glass">
-                    <div class="hexagon-icon">⭐</div>
-                    <h4>Stellar Network</h4>
-                    <p>Galactic-scale connectivity matrix</p>
+                    
+                    <h4>Support</h4>
+                    <p>24/7 customer support</p>
                 </div>
             </div>
         </div>
     </section>
+           
 
     <!-- Section 4: Timeline -->
     <section class="timeline" id="timeline">
-        <h2 class="section-title">EVOLUTION TIMELINE</h2>
+        <h2 class="section-title">PROCESS TIMELINE</h2>
         <div class="timeline-container">
             <div class="timeline-line"></div>
             
             <div class="timeline-item">
                 <div class="timeline-content glass">
-                    <div class="timeline-year">2024</div>
-                    <h4>Genesis Protocol</h4>
-                    <p>NeuralGlass is a cutting-edge cyberpunk glassmorphism HTML template featuring a striking purple, pink, and green color palette with futuristic neural network aesthetics.</p>
+                    <div class="timeline-year">Step 1</div>
+                    <h4>Application</h4>
+                    <p>Submit your complete visa application with all required documents through our secure online portal.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-content glass">
-                    <div class="timeline-year">2025</div>
-                    <h4>Matrix Integration</h4>
-                    <p>Built with pure HTML/CSS and vanilla JavaScript, it offers smooth scrolling, mobile-responsive navigation with hamburger menu, parallax effects, and dynamic visual elements that respond to user interaction.</p>
+                    <div class="timeline-year">Step 2</div>
+                    <h4>Document Review</h4>
+                    <p>Our immigration officers carefully review your application and documents for completeness and accuracy.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-content glass">
-                    <div class="timeline-year">2026</div>
-                    <h4>Quantum Leap</h4>
-                    <p>This HTML CSS template is brought to you by TemplateMo website. Perfect for tech startups, AI companies, gaming platforms, or any project requiring a bold, futuristic web presence.</p>
+                    <div class="timeline-year">Step 3</div>
+                    <h4>Processing</h4>
+                    <p>Your application enters the processing phase with regular status updates available through your account.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
             
             <div class="timeline-item">
                 <div class="timeline-content glass">
-                    <div class="timeline-year">2027</div>
-                    <h4>Neural Singularity</h4>
-                    <p>Human consciousness successfully merges with AI systems, creating hybrid intelligences that transcend biological limitations.</p>
+                    <div class="timeline-year">Step 4</div>
+                    <h4>Approval</h4>
+                    <p>Receive your visa decision and follow the instructions for next steps in the immigration process.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -304,70 +260,66 @@ https://templatemo.com/tm-597-neural-glass
     </section>
 
     <!-- Section 5: Contact -->
-<section class="" id="contact">
- <div class="container">
-    <h1>Visa Application Form</h1>
-    <?php if($message) echo "<p style='text-align:center;color:green;'>$message</p>"; ?>
-    <form method="POST" class="form">
-        <label>Full Name</label>
-        <input type="text" name="full_name" required>
-        <label>Passport Number</label>
-        <input type="text" name="passport_number" required>
-        <label>Visa Type</label>
-        <select name="visa_type" required>
-            <option value="Tourist_visa">Tourist Visa (TR)</option>
-            <option value="Free_entry">Free Entry</option>
-            <option value="transit">Visa On Transit</option>
-            <option value="business">Business Visa (BR)</option>
-            <option value="student">Student Visa (SR)</option>
-            <option value="work">Work Visa (WR)</option>
-            <option value="diplomatic">Diplomatic Visa (DR)</option>
-            <option value="official">Official Visa (OR)</option>
-            <option value="medical">Medical Visa (MR)</option>
-            <option value="journalist">Journalist Visa (JR)</option>
-            <option value="research">Research Visa (RR)</option>
-            <option value="cultural">Cultural Visa (CR)</option>
-            <option value="family">Family Visa (FR)</option>
-            <option value="retirement">Retirement Visa</option>
-            <option value="permanent">Permanent Resident Visa (PR)</option>
-            <option value="nonImmigrant">Non-Immigrant Visa (NR)</option>
-
-        </select>
-        <label>Status</label>
-        <select name="status" required>
-            <option value="Pending">Pending</option>
-        </select>
-        <button type="submit">Add Application</button>
-        <a href="index.php" class="back-btn" >Back</a>
-
-    </form>
-</div>
-        
+    <section class="" id="contact">
+        <div class="container">
+            <h1>Visa Application Form</h1>
+            <?php if($message) echo "<p style='text-align:center;color:green;'>$message</p>"; ?>
+            <form method="POST" class="form">
+                <label>Full Name</label>
+                <input type="text" name="full_name" required>
+                <label>Passport Number</label>
+                <input type="text" name="passport_number" required>
+                <label>Visa Type</label>
+                <select name="visa_type" required>
+                    <option value="Tourist_visa">Tourist Visa (TR)</option>
+                    <option value="Free_entry">Free Entry</option>
+                    <option value="transit">Visa On Transit</option>
+                    <option value="business">Business Visa (BR)</option>
+                    <option value="student">Student Visa (SR)</option>
+                    <option value="work">Work Visa (WR)</option>
+                    <option value="diplomatic">Diplomatic Visa (DR)</option>
+                    <option value="official">Official Visa (OR)</option>
+                    <option value="medical">Medical Visa (MR)</option>
+                    <option value="journalist">Journalist Visa (JR)</option>
+                    <option value="research">Research Visa (RR)</option>
+                    <option value="cultural">Cultural Visa (CR)</option>
+                    <option value="family">Family Visa (FR)</option>
+                    <option value="retirement">Retirement Visa</option>
+                    <option value="permanent">Permanent Resident Visa (PR)</option>
+                    <option value="nonImmigrant">Non-Immigrant Visa (NR)</option>
+                </select>
+                <label>Status</label>
+                <select name="status" required>
+                    <option value="Pending">Pending</option>
+                </select>
+                <button type="submit">Add Application</button>
+                <a href="index.php" class="back-btn">Back</a>
+            </form>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#features">Neural Networks</a>
-                <a href="#showcase">Matrix Protocols</a>
-                <a href="#timeline">Evolution</a>
+                <a href="#features">Immigration Services</a>
+                <a href="#showcase">Announcements</a>
+                <a href="#timeline">Process Guide</a>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
                 <a href="#">Documentation</a>
-                <!-- Add external links -->
-    			<a href="https://github.com/yourproject" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/yourproject" target="_blank" rel="noopener">Support</a>
             </div>
             <div class="footer-copyright">
-                <p>&copy; 2025 NeuralGlass Interface. All quantum rights reserved across dimensions.</p>
+                <p>&copy; 2025 Immigration Portal. All rights reserved.</p>
             </div>
             <div class="footer-design">
                 Design: <a href="https://templatemo.com" target="_blank" rel="nofollow noopener">TemplateMo</a> | 
-                Enhanced by Neural AI Systems | 
-                <a href="#">Quantum Framework</a>
+                Enhanced by Immigration Systems | 
+                <a href="#">Government Framework</a>
             </div>
         </div>
     </footer>
-<script src="templatemo-neural-scripts.js"></script>
+    <script src="templatemo-neural-scripts.js"></script>
 </body>
 </html>

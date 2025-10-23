@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Immigration System Portal</title>
-    <link rel="stylesheet" href="index_login.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <div class="container">
         <!-- Logo -->
-        <div class="logo"><img src="image/Logo2.jpg" width="400"></div>
+        <div class="logo"><img src="image/Logo3.png" width="400"></div>
         
         <!-- Title -->
         <h1>Port Authority</h1>

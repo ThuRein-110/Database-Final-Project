@@ -336,7 +336,7 @@ https://templatemo.com/tm-597-neural-glass
 
       <!-- 📎 Upload Document -->
       <label>Upload Document (PDF or Image)</label>
-      <input type="file" name="document_file" accept=".pdf,.jpg,.jpeg,.png" required>
+      <input type="file" class="back-btn" name="document_file" accept=".pdf,.jpg,.jpeg,.png" required>
 
       <button type="submit" name="submit">Add Application</button>
       <a href="index.php" class="back-btn">Back</a>
